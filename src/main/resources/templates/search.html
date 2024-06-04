@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yappy - Результаты поиска</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        header {
+            background-color: #2e7d32; /* Зелёный */
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .results-section {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .results {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .result-item {
+            flex: 1 0 21%;
+            margin: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .result-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #616161; /* Серый */
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .result-item a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .result-item a:hover {
+            color: #2e7d32; /* Зелёный */
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.classList.add("loaded");
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('query');
+            const resultsContainer = document.querySelector('.results');
+
+            const videos = [
+                {title: 'Видео 1', description: 'Описание видео 1. #хештег1', thumbnail: 'thumbnail1.jpg', link: 'video.html'},
+                {title: 'Видео 2', description: 'Описание видео 2. #хештег2', thumbnail: 'thumbnail2.jpg', link: 'video.html'},
+                {title: 'Видео 3', description: 'Описание видео 3. #хештег3', thumbnail: 'thumbnail3.jpg', link: 'video.html'},
+                {title: 'Видео 4', description: 'Описание видео 4. #хештег4', thumbnail: 'thumbnail4.jpg', link: 'video.html'}
+            ];
+
+            resultsContainer.innerHTML = '';
+
+            videos.forEach(video => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.innerHTML = `
+                    <a href="${video.link}">
+                        <img src="${video.thumbnail}" alt="Thumbnail">
+                        <h3>${video.title}</h3>
+                        <p>${video.description}</p>
+                    </a>
+                `;
+                resultsContainer.appendChild(resultItem);
+            });
+
+            document.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    document.body.classList.remove('loaded');
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 500);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Yappy</h1>
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="/search">Поиск</a>
+        </nav>
+    </header>
+    <main>
+        <section class="results-section">
+            <h2>Результаты поиска</h2>
+            <div class="results">
+                <!-- Результаты поиска будут добавлены динамически -->
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Yappy</p>
+    </footer>
+</body>
+</html>

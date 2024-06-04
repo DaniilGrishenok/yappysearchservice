@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yappy - Видео</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        header {
+            background-color: #2e7d32; /* Зелёный */
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .video-section, .comments-section {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #616161; /* Серый */
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.classList.add("loaded");
+
+            document.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    document.body.classList.remove('loaded');
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 500);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Yappy</h1>
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="/search">Поиск</a>
+        </nav>
+    </header>
+    <main>
+        <section class="video-section">
+            <h2>Название видео</h2>
+            <video controls>
+                <source src="video.mp4" type="video/mp4">
+                Ваш браузер не поддерживает воспроизведение видео.
+            </video>
+            <p>Описание видео. #хештег</p>
+        </section>
+        <section class="comments-section">
+            <h3>Комментарии</h3>
+            <div class="comment">
+                <p><strong>Пользователь:</strong> Комментарий</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Yappy</p>
+    </footer>
+</body>
+</html>
