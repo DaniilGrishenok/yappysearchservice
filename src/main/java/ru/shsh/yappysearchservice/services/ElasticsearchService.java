@@ -30,7 +30,6 @@ public class ElasticsearchService {
         jsonMap.put("video_url", videoUrl);
         jsonMap.put("description", description);
 
-        // Преобразование JSON строк в Map для добавления в индекс
         Map<String, Object> actionMap = objectMapper.readValue(actionData, HashMap.class);
         Map<String, Object> textMap = objectMapper.readValue(textData, HashMap.class);
         Map<String, Object> volumeMap = objectMapper.readValue(volumeData, HashMap.class);
@@ -49,13 +48,12 @@ public class ElasticsearchService {
         SearchRequest searchRequest = new SearchRequest("videos");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-        // Используем multi_match для поиска по нескольким полям
         MultiMatchQueryBuilder multiMatchQuery = QueryBuilders.multiMatchQuery(query,
                         "description",
-                        "actions.results.description",  // путь к вложенному полю
-                        "text.coherent_text",  // путь к вложенному полю
-                        "audio_transcript.text")  // путь к вложенному полю
-                .type(MultiMatchQueryBuilder.Type.PHRASE_PREFIX); // Учитываем фразу целиком
+                        "actions.results.description",
+                        "text.coherent_text",
+                        "audio_transcript.text")
+                .type(MultiMatchQueryBuilder.Type.PHRASE_PREFIX);
 
         searchSourceBuilder.query(multiMatchQuery);
         searchRequest.source(searchSourceBuilder);

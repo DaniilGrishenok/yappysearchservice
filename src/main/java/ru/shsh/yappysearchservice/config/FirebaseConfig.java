@@ -19,7 +19,7 @@ public class FirebaseConfig {
 
     @Bean
     public FirebaseApp initializeFirebase() throws IOException, NoSuchAlgorithmException, KeyManagementException {
-        disableSslVerification(); // Временно отключить проверку сертификатов
+        disableSslVerification();
 
         InputStream serviceAccount = FirebaseConfig.class.getClassLoader().getResourceAsStream("ok.json");
         if (serviceAccount == null) {
@@ -50,10 +50,9 @@ public class FirebaseConfig {
         sc.init(null, trustAllCerts, new java.security.SecureRandom());
         HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
-        // Create all-trusting host name verifier
+
         HostnameVerifier allHostsValid = (hostname, session) -> true;
 
-        // Install the all-trusting host verifier
         HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
     }
 }

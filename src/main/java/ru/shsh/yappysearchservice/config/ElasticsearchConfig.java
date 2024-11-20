@@ -28,16 +28,15 @@ public class ElasticsearchConfig {
 
     @Bean
     public RestHighLevelClient client() throws KeyManagementException, NoSuchAlgorithmException {
-        // Установите системные свойства для trustStore
+
         System.setProperty("javax.net.ssl.trustStore", "D:\\Хакатоны\\Хакатон ЛТЦ. Трек Yappy\\yappysearchservice\\src\\main\\resources\\static\\keystore.jks");
         System.setProperty("javax.net.ssl.trustStorePassword", "123456");
 
-        // Устанавливаем учетные данные для базовой аутентификации
+
         final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY,
                 new UsernamePasswordCredentials("admin", "12345Strong!"));
 
-        // Настраиваем SSLContext с использованием trustStore
         SSLContext sslContext = SSLContext.getInstance("TLS");
         sslContext.init(null, new TrustManager[]{new X509TrustManager() {
             @Override
@@ -52,7 +51,7 @@ public class ElasticsearchConfig {
             }
         }}, null);
 
-        // Создаем RestClientBuilder с настройками
+
         RestClientBuilder builder = RestClient.builder(
                         new HttpHost("localhost", 9200, "https"))
                 .setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder
@@ -60,7 +59,6 @@ public class ElasticsearchConfig {
                         .setSSLContext(sslContext)
                         .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE));
 
-        // Создаем RestHighLevelClient с настройками
         return new RestHighLevelClient(builder);
     }
 }
