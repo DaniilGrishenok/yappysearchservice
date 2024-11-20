@@ -20,11 +20,11 @@ import java.util.UUID;
 @Service
 public class FirebaseService {
 
-    private final String bucketName = "yappy-video-storage.appspot.com";  // Замените на имя вашего бакета
+    private final String bucketName = "yappy-video-storage.appspot.com";
 
     private String uploadFile(File file, String fileName) throws IOException {
         BlobId blobId = BlobId.of(bucketName, fileName);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("video/mp4").build(); // Обновлено для видео
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("video/mp4").build();
         InputStream inputStream = ElasticsearchService.class.getClassLoader().getResourceAsStream("ok.json");
         GoogleCredentials credentials = GoogleCredentials.fromStream(inputStream);
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
